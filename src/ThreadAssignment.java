@@ -1,8 +1,11 @@
 public class ThreadAssignment {
 
     static class Counter {
-        void count() {
-            //todo implement me
+        synchronized void count() {
+            for (int i=350; i>=1 ; i--){
+                System.out.println(i);
+            }
+            System.out.println("FINISH !");
         }
     }
 
@@ -22,7 +25,28 @@ public class ThreadAssignment {
     public static void main(String[] args) {
         Counter counter = new Counter();
 
-        new MyThread(counter).start();
-        new MyThread(counter).start();
+        MyThread t1 = new MyThread(counter);
+        MyThread t2 =new MyThread(counter);
+
+        t1.start();
+        t2.start();
+
+        try{
+            t1.join();
+        }
+        catch(Exception ex){
+            System.out.println("Exception has" +
+                                " been caught" + ex);
+        }
+        try{
+            t2.join();
+        }
+        catch(Exception ex){
+            System.out.println("Exception has" +
+                                " been caught" + ex);
+        }
+
+        System.out.println("DONE !");
+
     }
 }
